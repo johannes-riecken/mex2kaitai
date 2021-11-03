@@ -5,7 +5,7 @@ my $actions = Foo::Actions.new;
 my $s;
 # $s = 'GoTo 2 ;';
 $s = 'GoTo Set foo 3 2 ;';
-is-deeply Foo::Grammar.parse($s, :$actions).made, ('GoTo', {pos => 2});
+is-deeply Foo::Grammar.parse($s, :$actions).made, ('GoTo', {pos => 2, :stmt(Any)});
 $s = 'Set foo 3;';
 is-deeply Foo::Grammar.parse($s, :$actions).made, ('Set', {var => 'foo', target => 3});
 $s = 'Get bar Long ;';

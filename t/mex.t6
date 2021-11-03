@@ -8,35 +8,51 @@ my $actions = Mex::Actions.new();
 #is-deeply Mex::Grammar.parse($s, :$actions).made, { ImpType => 'Standard' };
 #$s = 'CLog foo 1 2 3 4 5 6 ;';
 #is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => ('CLog', {name => 'foo', offset => 1, size => 2, offsetoffset => 3, resourcesizeoffset => 4, uncompressedsize => 5, uncompressedsizeoffset => 6})};
+
 $s = 'FindLoc foo Int 1 2 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('FindLoc', {var => 'foo', type => 'Int', textnumber => 1, file => 2}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('FindLoc', {var => 'foo', type => 'Int', textnumber => 1, file => 2}) ;
+
 $s = 'Get foo Long 1 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('Get', {var => 'foo', type => 'Long', file => 1 }),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('Get', {var => 'foo', type => 'Long', file => 1 }) ;
+
 $s = 'GetDString foo 1 2 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('GetDString', {var => 'foo', n_chars => 1, file => 2}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('GetDString', {var => 'foo', n_chars => 1, file => 2}) ;
+
 $s = 'GoTo 1 2 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('GoTo', {pos => 1, file => 2}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('GoTo', {pos => 1, file => 2}) ;
+
 $s = 'IDString 1 2 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('IDString', {file => 1, bytes => 2}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('IDString', {file => 1, bytes => 2}) ;
+
 $s = 'Log foo 1 2 3 4 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('Log', {name => 'foo', offset => 1, size => 2, offsetoffset => 3, resourcesizeoffset => 4}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('Log', {name => 'foo', offset => 1, size => 2, offsetoffset => 3, resourcesizeoffset => 4}) ;
+
 $s = 'Math foo += bar ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('Math', {var1 => 'foo', math_op => '+=', var2 => 'bar'}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('Math', {var1 => 'foo', math_op => '+=', var2 => 'bar'}) ;
+
 $s = 'Next foo ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('Next', {var => 'foo'}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('Next', {var => 'foo'}) ;
+
 $s = 'Open FileDir 1 2 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('Open', {folderSpec => 'FileDir', fileOrExt => 1, handleNum => 2}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('Open', {folderSpec => 'FileDir', fileOrExt => 1, handleNum => 2}) ;
+
 $s = 'SavePos foo 1 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('SavePos', {var => 'foo', file => 1}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('SavePos', {var => 'foo', file => 1}) ;
+
 $s = 'Set foo 1 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('Set', {var => 'foo', numberOrIdentifier => 1}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('Set', {var => 'foo', numberOrIdentifier => 1}) ;
+
 $s = 'Set foo bar ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('Set', {var => 'foo', numberOrIdentifier => 'bar'}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('Set', {var => 'foo', numberOrIdentifier => 'bar'}) ;
+
 $s = 'String foo += bar ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('String', {var1 => 'foo', math_op => '+=', var2 => 'bar'}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('String', {var1 => 'foo', math_op => '+=', var2 => 'bar'}) ;
+
 $s = 'CleanExit ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('CleanExit', {}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('CleanExit', {}) ;
+
 $s = 'GetCT foo Byte bar 1 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('GetCT', {var => 'foo', type => 'Byte', terminatorChar => 'bar', file => 1}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('GetCT', {var => 'foo', type => 'Byte', terminatorChar => 'bar', file => 1}) ;
+
 $s = 'ComType Zlib1 ;';
-is-deeply Mex::Grammar.parse($s, :$actions).made, { stmts => (('ComType', {com_type => 'Zlib1'}),) };
+is-deeply Mex::Grammar.parse($s, :$actions).made, $('ComType', {com_type => 'Zlib1'}) ;
