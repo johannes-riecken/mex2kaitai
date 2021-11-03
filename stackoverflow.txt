@@ -1,0 +1,32 @@
+I'm trying to write a parser for a simple DSL which has several statements in the form `<statementName> <param1> <param2> ...`, where the number of parameters vary. As the structure of the statements is very similar, I'd like to know how I could specify the wanted result structure without having to repeat myself for each statement.
+
+Test file:
+
+    use v6;
+    use Test;
+    use Foo;
+    my $s;
+    $s = 'GoTo 2 ;';
+    is_deeply Foo::FooGrammar.parse($s).made, ('GoTo', {pos => 2});
+    $s = 'Set foo 3 ;';
+    is_deeply Foo::FooGrammar.parse($s).made, ('Set', {var => 'foo', target => 3});
+    $s = 'Get bar Long ;';
+    is_deeply Foo::FooGrammar.parse($s).made, ('Get', {var => 'bar', type => 'Long'});
+    $s = 'Set foo bar ;';
+    is_deeply Foo::FooGrammar.parse($s).made, ('Set', {var => 'foo', target => 'bar'});
+
+Grammar:
+
+    use v6;
+    unit package Foo;
+
+    grammar FooGrammar is export {
+      rule TOP { <stmt> ';' }
+      rule type = { 'Long' | 'Int' }
+      rule number = { \d+ }
+      rule identifier = { \a \w* }
+
+      rule goto_stmt { 'GoTo' <pos=number> }
+      rule set_stmt { 'Set' <var=identifier> <target=<number> || <identifier>> }
+      rule get_stmt { 'Get' <var=identifier> <type> }
+    }
